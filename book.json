@@ -1,1 +1,11 @@
-{}
+{
+  "plugins": [
+    "github",
+    "mermaid"
+  ],
+  "pluginsConfig": {
+    "github": {
+      "url": "https://github.com/everydayhero/how-we-build-things"
+    }
+  }
+}

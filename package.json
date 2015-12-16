@@ -1,0 +1,21 @@
+{
+  "name": "how-we-build-things",
+  "version": "0.1.0",
+  "description": "How everydayhero builds things..",
+  "dependencies": {},
+  "devDependencies": {
+    "gitbook-plugin-github": "^2.0.0",
+    "gitbook-plugin-livereload": "0.0.1",
+    "gitbook-plugin-mermaid": "0.0.7"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/everydayhero/how-we-build-things.git"
+  },
+  "author": "everydayhero",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/everydayhero/how-we-build-things/issues"
+  },
+  "homepage": "https://everydayhero.gitbooks.io/how-we-build-things/content/"
+}

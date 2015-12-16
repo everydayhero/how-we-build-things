@@ -1,4 +1,3 @@
-My Awesome Book
-=======
+# How we build things at everydayhero
 
-This file file serves as your book's preface, a great place to describe your book's content and ideas.
+A little gitbook that aims to raise the level of consistency across teams and projects. It also helps us onboard both new team members and 3rd party agencies.
