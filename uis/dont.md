@@ -4,7 +4,7 @@
 - Manipulate the DOM directly.
     - This means no jQuery, Prototype, Mootools. Ever.
 - Mutate references
-    - The pain this causes is our primary compliant with AngularJS' & $scope
+    - The pain this causes is our primary complaint with AngularJS' & $scope
 
 #### Libraries, frameworks, tools etc...
 - Use Angular
