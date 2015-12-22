@@ -12,3 +12,7 @@
     * [The future](uis/assess.md)
     * [3rd Parties](uis/third-parties.md)
     * [FAQs](uis/faq.md)
+* [Data Pipeline](data/index.md)
+    * [Distributing entity projections](data/entity-projections.md)
+    * [Emitting semantic events](data/semantic-events.md)
+* [Glossary](GLOSSARY.md)
