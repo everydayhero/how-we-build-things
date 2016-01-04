@@ -15,4 +15,5 @@
 * [Data Pipeline](data/index.md)
     * [Distributing entity projections](data/entity-projections.md)
     * [Emitting semantic events](data/semantic-events.md)
+    * [Next steps](data/next-steps.md)
 * [Glossary](GLOSSARY.md)
