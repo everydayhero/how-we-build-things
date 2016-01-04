@@ -45,7 +45,7 @@ Add the failure-mode protections as discussed.
   - url
   - campaign_uuid
   - charity_uuid
-  - owner_uid
+  - owner_uuid
   - owner_type
   - target
   - country_code
