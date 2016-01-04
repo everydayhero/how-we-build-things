@@ -37,6 +37,68 @@ Add the failure-mode protections as discussed.
 - Touch the aggregate store (it's not involved in this feature)
 - Remove events (for now.. keep Olga safe)
 
+#### Entities Reporting Schemata
+##### Page:
+  - uuid _to be created_
+  - name
+  - slug
+  - url
+  - campaign_uuid
+  - charity_uuid
+  - owner_uid
+  - owner_type
+  - target
+  - country_code
+  - currency_code `Page.currency.iso_code`
+  - online_total
+  - offline_total
+  - total
+  - expiry_date
+  - status
+  - custom_metric_total
+  - team_uuid *to be created nullable*
+  - updated_at
+  - created_at
+  - team_position *if team = true*
+
+##### Team:
+  - name
+  - team_page_url
+  - target
+  - offline_total
+  - online_total
+  - total
+  - created_at
+  - updated_at
+  - uuid _To be created_
+
+##### User:
+  - uuid
+  - name
+  - birthday _nullable_
+  - email
+  - phone _nullable_
+  - address _nullable_
+  - street_address _nullable_
+  - city _nullable_
+  - postal_code _nullable_
+  - locality _nullable_
+  - region _nullable_
+  - country _nullable_
+
+##### Charity:
+- uuid
+- name
+- country_code
+- created_at
+- updated_at
+
+###### Campaign:
+  - uuid
+  - name
+  - updated_at
+  - created_at
+
 ##### Notes about the relationship between existing Supporter events versus their reporting-projection use cases
 
 Report Field                            | Source Event
