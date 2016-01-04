@@ -34,3 +34,8 @@ Business domain events, understandable outside of engineering, by people intimat
 # Entities
 A 'thing' with distinct and independent existence in our business. They tend to be a recurring noun. eg. a particular SupporterPage, Charity, User etc. If you can look them up using some kind of ID, they're an entity.
 
+# Ecto
+A language integrated query and database wrapper for Elixir. http://hexdocs.pm/ecto/Ecto.html
+
+# Exq
+Job processing library for Elixir - compatible with Resque / Sidekiq (https://github.com/akira/exq)
