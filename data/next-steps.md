@@ -53,8 +53,8 @@ Add the failure-mode protections as discussed.
   - online_total
   - offline_total
   - total
-  - expiry_date
-  - status
+  - expires_at
+  - state
   - custom_metric_total
   - team_uuid *to be created nullable*
   - updated_at
@@ -71,6 +71,14 @@ Add the failure-mode protections as discussed.
   - created_at
   - updated_at
   - uuid _To be created_
+
+##### Page Groups:
+  - page_uuid
+  - key
+  - label
+  - value
+  - campaign_uuid
+  - page_uuid
 
 ##### User:
   - uuid
@@ -90,6 +98,7 @@ Add the failure-mode protections as discussed.
 - uuid
 - name
 - country_code
+- netsuite_id
 - created_at
 - updated_at
 
