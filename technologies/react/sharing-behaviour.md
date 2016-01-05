@@ -1,6 +1,6 @@
 # Sharing behaviour between React components
 
-React 0.13 introduced using plain Javascript classes to create components, 0.14 introduced "stateless functional components" as another method of defining them. Neither of these have an in-built method for behaviour sharing such as we had with the `mixins` option passed to `createClass`. So now we get to review mixins as a pattern for behaviour sharing and, if nescessary, come up with something better. If they're not all bad, we'll need to figure out how to, or even if we can, add them to the two new component definition options.
+React 0.13 introduced using plain Javascript classes to create components, 0.14 introduced "stateless functional components" as another method of defining them. Neither of these have an in-built method for behaviour sharing such as we had with the `mixins` option passed to `createClass`. So now we get to review mixins as a pattern for behaviour sharing and, if necessary, come up with something better. If they're not all bad, we'll need to figure out how to, or even if we can, add them to the two new component definition options.
 
 ## The problem
 
@@ -174,7 +174,7 @@ const SomeListComponent = SearchFilterable(
 )
 ```
 
-This is a problem we encountered recently building the Greact Southern Crossing Tour Tracker. We had three list components which could fetch their data independantly but also needed to be search-filtered client side.
+This is a problem we encountered recently building the Great Southern Crossing Tour Tracker. We had three list components which could fetch their data independently but also needed to be search-filtered client side.
 
 Let's take it a little further, what if on top of a search-filter we wanted a category filter as well?
 
@@ -203,7 +203,7 @@ const compose = (firstFunc, ...remainingFuncs) =>
   remainingFuncs.reduce((a, b) => (arg) => a(b(arg)), firstFunc)
 ```
 
-We need all the functions we pass to compose to accpet only one argument, also the return value of one function will be used as the input to the next. Therefore our functions need to accept a Component as their only argument and return a new Component. Looks like that's exactly what these already do :).
+We need all the functions we pass to compose to accept only one argument, also the return value of one function will be used as the input to the next. Therefore our functions need to accept a Component as their only argument and return a new Component. Looks like that's exactly what these already do :).
 
 With `compose` it might look like this:
 
@@ -246,8 +246,8 @@ const SomeOtherListComponent = SearchAndCatFilterable(
 
 Bleh, it's on it's way I think. But it's still not there... Also, it's probably time to check back in on the problem.
 
-Let's look at the first two issues. Does this address behaviour bleeding between mixins and the original component? Does this adress state management bleeding?
+Let's look at the first two issues. Does this address behaviour bleeding between mixins and the original component? Does this address state management bleeding?
 
 In the above examples it's impossible for one wrapping component to call methods on any other component, they can only communicate via props. The same then goes for state, no component can directly update the state of any other component. They _can_ however mess about with props as they're being passed down. Is that easier or harder to reason about?
 
-The last issue is about mixins being "a lot like" component definitions. In all of the above examples they _are_ component definitions. They can be made with `createClass`, as es6 classes, as functions, it makes no difference.
+The last issue is about mixins being "a lot like" component definitions. In all of the above examples they _are_ component definitions. They can be made with `createClass`, as ES6 classes, as functions, it makes no difference.
