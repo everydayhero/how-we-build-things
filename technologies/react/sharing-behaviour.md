@@ -152,76 +152,48 @@ In this case we might prefer the `<WrappingComponent><my-component-markup /></Wr
 
 ### Another example: prop transforming
 
-Let's think about another example. What if we need to consistently transform the props passed to a component. Say we want to build a `className` from the values of some of the component's `props`.
+Let's think about another example. What if we need to consistently transform the props passed to a component. Say we want to filter the `data` props which could be passed to multiple list components.
 
 ```js
-const ValidateableClasses = (baseName, Component) => (props) => {
-  const {
-    className,
-    valid
-  } = props
-
-  const classes = classNames(className, {
-    [`${ baseName }--valid`]:   valid === true,
-    [`${ baseName }--invalid`]: valid === false
-  })
-
-  return <Component { ...props } className={ classes } />
+const filterBySearchTerm = (searchTermString, collection) => {
+  const searchTermRgx = new RegExp(queryString.split('').join('.*'), 'gi')
+  return collection.filter(
+    (item) => item.match(searchTermRgx)
+  )
 }
 
-const SomeFormControl = ValidateableClasses('SomeFormControl',
-  (props) => <input { ...props } type="text" />
-)
+const SearchFilterable  = (Component) => (props) => {
+  const filteredData = filterBySearchTerm(props.searchTerm, props.data)
 
-const SomeOtherFormControl = ValidateableClasses('SomeOtherFormControl',
-  (props) => <input { ...props } type="number" />
+  return <Component { ...props } data={ filteredData } />
+}
+
+const SomeListComponent = SearchFilterable(
+  (props = { data: [] }) =>
+    <ul>{ data.map((datum) => <li>{ datum }</i>) }</ul>
 )
 ```
 
-I don't think the above is possible using the nested rendering approach. Furthermore I'm not sure the above is possible (in this way) with mixins.
+This is a problem we encountered recently building the Greact Southern Crossing Tour Tracker. We had three list components which could fetch their data independantly but also needed to be search-filtered client side.
 
-Let's take it a little further, what if on top of class names for validity we also wanted them for size. While were at it, let's replace `baseName` with the component's `displayName`. To do this we'll need to merge the old component into the new one, this way we'll get everything statically defined on the component (`displayName`, `propTypes`, `defaultProps`, etc.) We'll also need the passed in component to have a `displayName`, we can do this by either assigning it to a temp var and adding one, or we can `tap` it.
+Let's take it a little further, what if on top of a search-filter we wanted a category filter as well?
 
 ```js
-const tap = (obj, func) => {
-  func(obj)
-  return obj
+// imagine that SearchFilterable has been refactored to match the Regex against say a `name` key.
+
+const fitlerByCategory = (category, collection) =>
+  collection.filter((item) => item.category === category)
+
+const CategoryFilterable = (Component) => (props) {
+  const filteredData = fitlerByCategory(props.categoryFilter, props.data)
+
+  return <Component { ...props } data={ filteredData } />
 }
 
-const ScaleableClasses = (Component) => Object.assign((props) => {
-  const { displayName } = Component
-
-  const {
-    className,
-    size
-  } = props
-
-  const classes = classNames(className, `${ displayName }--${ size }`)
-
-  return <Component { ...props } className={ classes } />
-}, Component)
-
-const SomeFormControl = ScaleableClasses(
-  ValidateableClasses(
-    tap(
-      (props) => <input { ...props } type="text" />,
-      (Component) => {
-        Component.displayName = 'SomeFormControl'
-      }
-    )
-  )
-)
-
-const SomeOtherFormControl = ScaleableClasses(
-  ValidateableClasses(
-    tap(
-      (props) => <input { ...props } type="number" />,
-      (Component) => {
-        Component.displayName = 'SomeOtherFormControl'
-      }
-    )
-  )
-)
+const SomeListComponent = CategoryFilterable(SearchFilterable(
+  (props = { data: [] }) =>
+    <ul>{ data.map((datum) => <li>{ datum }</i>) }</ul>
+))
 ```
 
 Hrm, that's pretty wonky. This is starting to look like a common problem though: `funcA(funcB(params))`. That's function composition. Let's see if it helps.
@@ -231,62 +203,48 @@ const compose = (firstFunc, ...remainingFuncs) =>
   remainingFuncs.reduce((a, b) => (arg) => a(b(arg)), firstFunc)
 ```
 
-We need all the functions we pass to compose to accpet only one argument, also the return value of one function will be used as the input to the next. Therefore our functions need to accept a Component as their only argument and return a new Component. Now that we've decided to replace `baseName` with `Component.displayName` that's exactly what they do!
+We need all the functions we pass to compose to accpet only one argument, also the return value of one function will be used as the input to the next. Therefore our functions need to accept a Component as their only argument and return a new Component. Looks like that's exactly what these already do :).
 
-Might look like this:
+With `compose` it might look like this:
 
 ```js
-const SomeFormControl = compose(
-  ValidateableClasses,
-  ScaleableClasses)
-  (tap(
-    (props) => <input { ...props } type="text" />,
-    (Component) => {
-      Component.displayName = 'SomeFormControl'
-    }
-  ))
+const SomeListComponent = compose(
+  CategoryFilterable,
+  SearchFilterable
+)(
+  (props = { data: [] }) =>
+    <ul>{ data.map((datum) => <li>{ datum }</i>) }</ul>
 )
 
-const SomeOtherFormControl = compose(
-  ValidateableClasses,
-  ScaleableClasses)
-  (tap(
-    (props) => <input { ...props } type="text" />,
-    (Component) => {
-      Component.displayName = 'SomeOtherFormControl'
-    }
-  ))
+const SomeOtherListComponent = compose(
+  CategoryFilterable,
+  SearchFilterable
+)(
+  (props = { data: [] }) =>
+    <ol>{ data.map((datum) => <li>{ datum }</i>) }</ol>
 )
 ```
 
 Because of how function composition works, we can make this even a little more generic:
 
 ```js
-const FormControlClasses = compose(
-  ValidateableClasses,
-  ScaleableClasses
+const SearchAndCatFilterable = compose(
+  CategoryFilterable,
+  SearchFilterable
 )
 
-const SomeFormControl = FormControlClasses(
-  tap(
-    (props) => <input { ...props } type="text" />,
-    (Component) => {
-      Component.displayName = 'SomeFormControl'
-    }
-  )
+const SomeListComponent = SearchAndCatFilterable(
+  (props = { data: [] }) =>
+    <ul>{ data.map((datum) => <li>{ datum }</i>) }</ul>
 )
 
-const SomeOtherFormControl = FormControlClasses(
-  tap(
-    (props) => <input { ...props } type="text" />,
-    (Component) => {
-      Component.displayName = 'SomeOtherFormControl'
-    }
-  )
+const SomeOtherListComponent = SearchAndCatFilterable(
+  (props = { data: [] }) =>
+    <ol>{ data.map((datum) => <li>{ datum }</i>) }</ol>
 )
 ```
 
-Bleh, it's on it's way I think. But it's still not there, I don't love that `tap`. Also, it's probably time to check back in on the problem.
+Bleh, it's on it's way I think. But it's still not there... Also, it's probably time to check back in on the problem.
 
 Let's look at the first two issues. Does this address behaviour bleeding between mixins and the original component? Does this adress state management bleeding?
 
