@@ -11,9 +11,9 @@ For me (paraphrasing in the extreme), the key problems exposed are:
 * mixins can unintentionally hide / distribute the source of some component state
 * mixins look a lot like stand-alone component definitions but they don't act like them. See: the chaining of _some_ life-cycle methods as well as the merging of prop-types and initial-state objects.
 
-Mixins make it easier to abstract the behaviour and state management of our components. However, this kind of abstraction is super hard and we can accidentally force readers of our code to play a frustrating game of hide-and-go-seek. Components can become a patch-work quilt of different methods, default props and initial state. Sure, this is a problem which can be avoided with **Discipline &#8482;** but maybe there's a way which encourages keeping related behaviours together a little more... obviously?
+Mixins make it easier to abstract the behaviour and state management of our components. However, this kind of abstraction is super hard and we can accidentally force readers of our code to play a frustrating game of hide-and-go-seek. Components can become a patch-work quilt of different methods, default props and initial state. Sure, this is a problem which can be avoided with **Discipline &#8482;** but maybe there's a new approach which encourages keeping related behaviours together.
 
-That's what this is going to be about: digging into alternative ways to share behaviour between React components. Let's see if we find something useful.
+*That's what this is going to be about: digging into alternative ways to share behaviour between React components. Let's see if we find something useful.*
 
 ## Currently proposed solutions: nesting and higher order components
 
@@ -99,6 +99,8 @@ const SomeComponent = Loadable(
 
 What if multiple components use the same loading state?
 
+*Nesting*
+
 ```js
 const Loadable = ({ loading, loadingState, children }) =>
   loading ? loadingState : children
@@ -120,6 +122,8 @@ const AnotherComponent = (props) =>
   </Loadable>
 ```
 
+*Higher order component*
+
 ```js
 const Loadable = (LoadingComponent, ContentComponent) => (props) =>
   props.loading ?
@@ -136,17 +140,13 @@ const SomeComponent = Loadable(
 
 const AnotherComponent = Loadable(
   ResourceNameLoadingState,
-  (props) =>
-    <div>
-      <h1>I'm special</h1>
-      { props.differentData }
-    </div>
+  (props) => <div>{ props.differentData }</div>
 )
 ```
 
 The first of the last two examples is more readable to me. Something to do with loading is wrapping the rendering of my component and it takes a loading state. I get it, it's probably going to render the `loadingState` while the component is loading.
 
-The second example is more obscure. This might have to do with the fact that we get more information from the name of the `loadingState` prop. "The first argument to the Loadable function" is less informative.
+The second example is more obscure. This might have to do with the fact that we get more information in the first example from the name of the `loadingState` prop. "The first argument to the Loadable function" is less informative.
 
 In this case we might prefer the `<WrappingComponent><my-component-markup /></WrappingComponent>` version. We need a name for these... something to do with "nesting". Matryoshkas?
 
