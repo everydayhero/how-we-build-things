@@ -26,26 +26,6 @@ FollowerWorker->>FollowerDB: Write data (entity, id)
 
 {% endmermaid %}
 
-
-A note from Manny
-
-```
-Following on from yesterday’s Architecture Guild Meeting, we have arrived at the following pattern:
-Leader systems keep local reporting-centric representations of their entities within their own schema
-The Leader system requests reporting store updates within the transaction that changes entity state
-Entities are then serialised  ASAP (but out of process) to a table local to the Leader system’s database
-Table is then shipped to the data  warehouse through an E(no-T)L process provided by an external service (TBA)
-Follower systems then query this information to produce meaningful results for their consumers
-The initial “Asylum” proposal was predicated on JSON-Schema to check the nullability and data types of events. While this is still a good idea for events, it is redundant in the reporting ecosystem,  given the database can offer the validation of these characteristics as a part of its schema, which in turn is controlled by migrations.
-
-For consideration: where, in redshift, will the reporting data be stored? Is it a good idea to have it in the same redshift schema that segment manages automatically?
-
-Regards,
-
-Manuel
-```
-
-
 ## Failure modes (AKA What if...)
 
 ##### What if no job is created to update the leader-system's reporting projection?
