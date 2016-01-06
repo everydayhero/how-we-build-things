@@ -49,6 +49,7 @@ Add the failure-mode protections as discussed.
   - owner_type
   - target
   - country_code
+  - story
   - currency_code `Page.currency.iso_code`
   - online_total
   - offline_total
@@ -65,6 +66,7 @@ Add the failure-mode protections as discussed.
   - name
   - team_page_url
   - target
+  - story
   - offline_total
   - online_total
   - total
@@ -90,6 +92,9 @@ Add the failure-mode protections as discussed.
 - uuid
 - name
 - country_code
+- website_url
+- email
+- raised_online
 - created_at
 - updated_at
 
