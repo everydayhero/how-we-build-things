@@ -47,7 +47,7 @@ This would manifest as stale reports / missing rows.
 
 > How SHOULD we discover this problem as engineers?
 
-We could look at the table of 'IntentionToUpdateReportingProjections' (better name required..) and produce a graph (with an alert in Librato) showing the oldest (unworked) intention to update. This is known as the sweeper process (Lobsang).
+We could look at the table of ProjectionIntent and produce a graph (with an alert in Librato) showing the oldest (unworked) intention to update. This is known as the sweeper process (Lobsang).
 
 We should see errors in our workers, which explain their inability to process this job. Where this DOESN'T happen, we probably have the job in the SQL store, but not the job queue.
 
