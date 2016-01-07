@@ -97,19 +97,25 @@ Add the failure-mode protections as discussed.
   - country _nullable_
 
 ##### Charity:
-- uuid
-- name
+- cached_online_amount_cents
 - country_code
-- netsuite_id
-- website_url
-- email
-- raised_online
 - created_at
+- email
+- minimum_supporter_age
+- name
+- netsuite_id
+- raised_online
 - updated_at
+- uuid
+- website_url
 
 ###### Campaign:
   - uuid
   - name
+  - country_code
+  - website_url
+  - description
+  - disabled
   - updated_at
   - created_at
 
