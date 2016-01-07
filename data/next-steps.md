@@ -104,12 +104,18 @@ Add the failure-mode protections as discussed.
 - email
 - raised_online
 - netsuite_id
+- minimum_supporter_age
+- cached_online_amount_cents
 - created_at
 - updated_at
 
 ###### Campaign:
   - uuid
   - name
+  - country_code
+  - website_url
+  - description
+  - disabled
   - updated_at
   - created_at
 
