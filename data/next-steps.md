@@ -32,15 +32,33 @@ Modify existing event emission logic for pertinent events to use the above model
 POST /notification
 ```
 
-with the following JSON payload:
-- `:leader_name`: signifies the _follower_ what **database** to read
-- `:entity_name`: signifies the _follower_ what **table** to read
-- `:projection_id` : signifies the _follower_ what **row** to read
+wih the following JSON payload:
+```json
+{
+  "event": "LeaderWasUpdated",
+  "data": {
+    "system": "the leader app",
+    "entity": "The entity class to read",
+    "uuid": "The entity UUID",
+  }
+}
+```
 
-example:
+example usage:
 ```
-curl -H "Content-Type: application/json" -X POST -d '{"leader_name":"supporter","entity_name":"page","projection_id":"0123456789"}' http://$FOLLOWER_IP:$FOLLOWER_PORT/notification
-```
+echo '{
+  "event": "LeaderWasUpdated",
+  "data": {
+    "system": "supporter",
+    "entity": "Projections::PageProjection",
+    "uuid": "01234567",
+  }
+}' > payload.json && \
+curl -H "Content-Type: application/json" \
+ -X POST \
+ --data "@payload.json" \
+ http://requestb.in/14886i21
+ ```
 
 
 > point of usefulness.. you can query a nice table in **Looker**!!
