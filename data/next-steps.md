@@ -29,12 +29,19 @@ Modify existing event emission logic for pertinent events to use the above model
 #### API entrypoint to be implemented into the Follower System
 
 ```
-GET /projection_notification/:leader_name/:entity_name/:projection_id
+POST /notification
 ```
 
-- `:leader_name`: tells the _follower_ what **database** to read
-- `:entity_name`: tells the _follower_ what **table** to read
-- `:projection_id` : tells the _follower_ what **row** to read
+with the following JSON payload:
+- `:leader_name`: signifies the _follower_ what **database** to read
+- `:entity_name`: signifies the _follower_ what **table** to read
+- `:projection_id` : signifies the _follower_ what **row** to read
+
+example:
+```
+curl -H "Content-Type: application/json" -X POST -d '{"leader_name":"supporter","entity_name":"page","projection_id":"0123456789"}' http://$FOLLOWER_IP:$FOLLOWER_PORT/notification
+```
+
 
 > point of usefulness.. you can query a nice table in **Looker**!!
 
