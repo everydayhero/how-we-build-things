@@ -26,6 +26,16 @@ Modify existing event emission logic for pertinent events to use the above model
     - receives "pull this row please".. entity, ID
     - enqueues a job to update the follower projection
 
+#### API entrypoint to be implemented into the Follower System
+
+```
+GET /projection_notification/:leader_name/:entity_name/:projection_id
+```
+
+- `:leader_name`: tells the _follower_ what **database** to read
+- `:entity_name`: tells the _follower_ what **table** to read
+- `:projection_id` : tells the _follower_ what **row** to read
+
 > point of usefulness.. you can query a nice table in **Looker**!!
 
 ### Later...
