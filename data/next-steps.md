@@ -29,10 +29,10 @@ Modify existing event emission logic for pertinent events to use the above model
 #### API entrypoint to be implemented into the Follower System
 
 ```
-POST /notification
+POST /notifications
 ```
 
-wih the following JSON payload:
+with the following JSON payload:
 ```json
 {
   "event": "LeaderWasUpdated",
@@ -57,7 +57,7 @@ echo '{
 curl -H "Content-Type: application/json" \
  -X POST \
  --data "@payload.json" \
- http://requestb.in/14886i21
+ https://panoramix.everydayhero.io/notifications
  ```
 
 
@@ -153,6 +153,14 @@ Add the failure-mode protections as discussed.
   - disabled
   - updated_at
   - created_at
+  - team_size_limit
+  - offline_donations
+  - default_page_target
+  - locality
+  - region
+  - latitude
+  - longitude
+  - all_charities
 
 ##### Notes about the relationship between existing Supporter events versus their reporting-projection use cases
 
