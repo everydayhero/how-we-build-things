@@ -155,6 +155,7 @@ Add the failure-mode protections as discussed.
   - created_at
   - team_size_limit
   - offline_donations
+  - team_size_limit
   - default_page_target
   - locality
   - region
