@@ -13,6 +13,8 @@
     * [3rd Parties](uis/third-parties.md)
     * [FAQs](uis/faq.md)
 * [Technologies](technologies/index.md)
+  * [Lambda](technologies/lambda/index.md)
+    * [API Gateway errors](technologies/lambda/api-gateway-errors.md)
   * [React](technologies/react/index.md)
     * [Sharing behaviour](technologies/react/sharing-behaviour.md)
 * [Data Pipeline](data/index.md)

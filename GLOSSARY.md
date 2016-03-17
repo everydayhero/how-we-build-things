@@ -13,6 +13,12 @@ http://rubyonrails.org/
 # React
 https://facebook.github.io/react/
 
+# Lambda
+http://docs.aws.amazon.com/lambda/latest/dg/welcome.html
+
+# API Gateway
+https://aws.amazon.com/api-gateway/
+
 # Ember
 http://emberjs.com/
 
