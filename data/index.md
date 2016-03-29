@@ -30,7 +30,6 @@ All **write** attempts in the everydayhero ecosystem are served by a leader syst
 - Semantic events are a basic requirement
 - "Sue updated her page's story".
 
-
 ### Design considerations & goals
 
 All reads (including serving reports / multi-system APIs) should be as near-time as possible. When considering implementation, we can roughly translate this to mean "batches alone won't get this done".
